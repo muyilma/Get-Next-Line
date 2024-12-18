@@ -7,13 +7,26 @@
 int	main(void)
 {
 	int	fd;
-    char *a;
+    char a[7]="mustafa";
 	fd = open("test.txt", O_CREAT | O_RDWR, 0777);
-	a=malloc(BUFFER_SIZE);
 
-    read(fd,a,BUFFER_SIZE);
-    read(fd,a,BUFFER_SIZE);
-    read(fd,a,BUFFER_SIZE);
+    read(fd,a,2);
+
 
     printf("%s",a);
+}
+int	main(void)
+{
+	int	fd;
+	fd = open("test.txt", O_CREAT | O_RDWR, 0777);
+	
+   
+	
+     printf("%s",get_next_line(fd));
+    // printf("%s",get_next_line(fd));
+    // printf("%s",get_next_line(fd));
+    // printf("%s",get_next_line(fd));
+    // printf("%s",get_next_line(fd));
+    // printf("%s",get_next_line(fd));
+
 }

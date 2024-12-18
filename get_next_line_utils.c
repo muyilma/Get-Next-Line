@@ -1,6 +1,19 @@
 #include "get_next_line.h"
 #include <stdlib.h>
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+#include <stdio.h>
+
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+	{
+		i++;
+	}
+	return (i);
+}
+char	*ft_substr(char *s, unsigned int start, size_t len)
 {
 	char			*a;
 	unsigned int	i;
@@ -24,18 +37,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (a);
 }
 
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i])
-	{
-		i++;
-	}
-	return (i);
-}
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	int		a;
 	char	*str;
@@ -63,119 +65,22 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (str);
 }
 
-char	*get_next_line(int fd)
+char	*ft_strchr(const char *s, int c)
 {
-	static char	*a;
-	char		*b;
-	int			j;
-	char		*hola;
+	int	i;
 
-	hola = malloc(BUFFER_SIZE);
-	j = 0;
-	a = malloc(BUFFER_SIZE);
-	b = malloc(BUFFER_SIZE);
-	read(fd, a, BUFFER_SIZE);
-	while (a[j])
+	i = 0;
+	while (s[i])
 	{
-		while (a[j] != '\n' && a[j])
+		if (s[i] == (char)c)
 		{
-			if (a[j + 1] == '\n')
-			{
-				j ++;
-				b = ft_substr(a, 0, j);
-				a += j;
-				hola = ft_strjoin(hola, b);
-				return (hola);
-			}
-			j++;
+			return ((char *)s + i);
 		}
-		if (a[j] == '\n' )
-		{
-			j++;
-			b = ft_substr(a, 0, j);
-			a += j;
-			hola = ft_strjoin(hola, b);
-			break ;
-		}
-		hola = ft_strjoin(hola, a);
-		read(fd, a, BUFFER_SIZE);
-		j = 0;
+		i++;
 	}
-	return (hola);
-}
-
-int	main(void)
-{
-	int	fd;
-
-	fd = open("test.txt", O_CREAT | O_RDWR, 0777);
-	printf("%s",get_next_line(fd));
-	printf("%s", get_next_line(fd));
-}
-
-
-// char	*get_next_line(int fd)
-// {
-// 	static char	*a;
-// 	int			i;
-// 	int			j;
-// 	char		*hola;
-
-// 	hola = malloc(BUFFER_SIZE);
-// 	i = 0;
-// 	j = 0;
-// 	a = malloc(BUFFER_SIZE);
-// 	read(fd, a, BUFFER_SIZE);
-// 	while (a[j])
-// 	{
-// 		while (a[j] != '\n' && a[j])
-// 		{
-// 			hola[i] = a[j];
-// 			if (a[j] + 1 == '\n')
-// 			{
-// 				i++;
-// 				j++;
-// 				break ;
-// 			}
-// 			j++;
-// 			i++;
-// 		}
-// 		if (a[j] == '\n')
-// 		{
-// 			i++;
-// 			j++;
-// 			break ;
-// 		}
-// 		read(fd, a, BUFFER_SIZE);
-// 		j = 0;
-// 	}
-// 	a = a + j;
-// 	printf("%s\n", a);
-// 	return (hola);
-// }
-
-
-
-
-
-
-
-char	*get_next_line(int fd)
-{
-	static char *afterStr;
-
-	char *beforeStr;
-
-	char *str;
-
-	while(*str)
+	if ((char)c == '\0')
 	{
-		while(*str)
-		{
-			if(str=='\n')
-			{
-				
-			}
-		}	
+		return ((char *)s + i);
 	}
+	return (NULL);
 }
