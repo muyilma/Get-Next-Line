@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 17:06:33 by musyilma          #+#    #+#             */
-/*   Updated: 2024/12/24 23:36:19 by musyilma         ###   ########.fr       */
+/*   Updated: 2024/12/24 23:36:27 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 #include <unistd.h>
 
 size_t	ft_strlen(const char *s)
@@ -55,7 +55,7 @@ char	*ft_read(int fd, char *str)
 
 char	*get_next_line(int fd)
 {
-	static char	*afterstr;
+	static char	*afterstr[1024];
 	int			j;
 	char		*beforestr;
 	char		*temp;
@@ -64,15 +64,15 @@ char	*get_next_line(int fd)
 		return (NULL);
 	beforestr = NULL;
 	j = -1;
-	afterstr = ft_read(fd, afterstr);
-	while (afterstr && afterstr[++j])
+	afterstr[fd] = ft_read(fd, afterstr[fd]);
+	while (afterstr[fd] && afterstr[fd][++j])
 	{
-		if (afterstr[j] == '\n' || afterstr[j + 1] == '\0')
+		if (afterstr[fd][j] == '\n' || afterstr[fd][j + 1] == '\0')
 		{
 			j++;
-			beforestr = ft_substr(afterstr, 0, j);
-			temp = afterstr;
-			afterstr = ft_strdup(afterstr + j);
+			beforestr = ft_substr(afterstr[fd], 0, j);
+			temp = afterstr[fd];
+			afterstr[fd] = ft_strdup(afterstr[fd] + j);
 			free(temp);
 			return (beforestr);
 		}
